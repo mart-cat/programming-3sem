@@ -30,7 +30,7 @@
 
 ## Решение
 
-Файл сapp.py содержит функцию gen_bin_tree(height, root, left_leaf, right_leaf).
+Файл app.py содержит функцию gen_bin_tree(height, root, left_leaf, right_leaf).
 
 Пока height > 0, создаём узел со значением root и двумя поддеревьями высоты height - 1. Значения потомков вычисляются лямбдами left_leaf и right_leaf. При height = 0 возвращается лист.
 
