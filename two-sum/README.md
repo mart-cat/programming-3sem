@@ -24,7 +24,7 @@
 Файл twosum.py содержит функцию add(nums, target).
 
 Используется хеш-таблица (словарь) для хранения уже просмотренных чисел:
-
+```python
     def add(nums, target):
         seen = {}
         for i, num in enumerate(nums):
@@ -33,7 +33,7 @@
                 return [seen[need], i]
             seen[num] = i
         return []
-
+```
 
 ## Запуск тестов
 
