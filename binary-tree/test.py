@@ -1,6 +1,4 @@
 import unittest
-from typing import Any
-
 from app import gen_bin_tree
 
 
