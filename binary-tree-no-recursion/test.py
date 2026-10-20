@@ -3,22 +3,19 @@ from app import gen_bin_tree
 
 
 class TestGenBinTree(unittest.TestCase):
+    def test_height_zero(self):
+        tree = gen_bin_tree(0, 8)
+        self.assertEqual(tree, {"value": 8, "left": None, "right": None})
 
-    def test_height_zero(self) -> None:
-        """При height=0 должно возвращаться значение корня"""
-        tree = gen_bin_tree(0, 1)
-        self.assertEqual(tree, [])
+    def test_height_one(self):
+        tree = gen_bin_tree(1, 8)
+        self.assertEqual(tree["left"]["value"], 12)
+        self.assertEqual(tree["right"]["value"], 64)
 
-    def test_height_one(self) -> None:
-        """При height=1 корень с двумя None-потомками"""
-        tree = gen_bin_tree(1, 5)
-        self.assertEqual(tree, [5])
-
-    def test_height_three(self) -> None:
-        """Проверка структуры дерева высоты 3"""
-        tree = gen_bin_tree(3, 1)
-        self.assertEqual(tree, [1, 2, 4, 5, 3, 6, 7])
+    def test_height_two(self):
+        tree = gen_bin_tree(2, 8)
+        self.assertEqual(tree["left"]["left"]["value"], 18)
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()
