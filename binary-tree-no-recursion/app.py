@@ -1,21 +1,41 @@
-"""Построение бинарного дерева без рекурсии"""
+"""Построение полного бинарного дерева без рекурсии.
+
+Вариант 8: значения по умолчанию для параметров:
+    height = 4, root = 8.
+
+Реализация использует обход в ширину (BFS) с помощью collections.deque,
+поэтому глубокая рекурсия не требуется — дерево строится итеративно.
+"""
 
 from collections import deque
 from typing import Callable, TypeAlias
 
+Number: TypeAlias = int | float
+LeafFunc: TypeAlias = Callable[[Number], Number]
 TreeNode: TypeAlias = dict[str, object]
 
 
 def gen_bin_tree(
     height: int = 4,
-    root: int | float = 8,
-    left_leaf: Callable[[int | float], int | float] = lambda x: x + x / 2,
-    right_leaf: Callable[[int | float], int | float] = lambda x: x ** 2,
+    root: Number = 8,
+    left_leaf: LeafFunc = lambda x: x + x / 2,
+    right_leaf: LeafFunc = lambda x: x ** 2,
 ) -> TreeNode:
-    """Создать полное бинарное дерево заданной высоты без рекурсии.
+    """Итеративно строит полное бинарное дерево заданной высоты.
 
-    Высота означает число рёбер от корня до самого глубокого листа.
-    При высоте 0 дерево состоит из единственного корневого узла.
+    Параметры:
+        height: высота дерева — число рёбер от корня до самого глубокого
+            листа. При height == 0 дерево состоит из единственного
+            корневого узла. Значение по умолчанию — 4 (вариант 4).
+        root: значение корневого узла. Значение по умолчанию — 8 (вариант 4).
+        left_leaf: функция вычисления значения левого потомка из значения
+            родителя. По умолчанию r + r/2.
+        right_leaf: функция вычисления значения правого потомка из значения
+            родителя. По умолчанию r ** 2.
+
+    Возвращает:
+        Словарь вида {"value": ..., "left": ..., "right": ...}.
+        У листьев (узлов на уровне height) поля left и right равны None.
     """
     if not isinstance(height, int) or isinstance(height, bool):
         raise TypeError("height должна быть целым числом")
@@ -23,7 +43,7 @@ def gen_bin_tree(
         raise ValueError("height не может быть отрицательной")
 
     tree: TreeNode = {"value": root, "left": None, "right": None}
-    queue = deque([(tree, 0)])
+    queue: deque[tuple[TreeNode, int]] = deque([(tree, 0)])
 
     while queue:
         node, level = queue.popleft()

@@ -1,19 +1,35 @@
-"""Генерация бинарного дерева."""
+"""Генерация бинарного дерева.
+"""
 
 from typing import Callable
 
 
 def gen_bin_tree(
-    height: int,
-    root: float,
+    height: int = 4,
+    root: float = 8,
     left_leaf: Callable[[float], float] = lambda r: r + r / 2,
     right_leaf: Callable[[float], float] = lambda r: r * r,
 ) -> dict:
-    """Рекурсивно строит бинарное дерево высоты height.
+    """Рекурсивно строит бинарное дерево заданной высоты.
 
-    Каждый узел — словарь {"value", "left", "right"}.
-    Лист (height == 0) имеет left = right = None.
+    Параметры:
+        height: высота дерева (неотрицательное). height == 0 —
+            возвращается только корневой лист. Значение по умолчанию — 4
+        root: значение корневого узла. Значение по умолчанию — 8
+        left_leaf: функция вычисления значения левого из значения
+            родителя. По умолчанию r + r/2.
+        right_leaf: функция вычисления значения правого из значения
+            родителя. По умолчанию r * r.
+
+    Возвращает:
+        Словарь вида {"value": ..., "left": ..., "right": ...}.
+        У листа (height == 0) поля left и right равны None.
+
+    Исключения:
+        ValueError: если height < 0.
     """
+    if height < 0:
+        raise ValueError(f"height должно быть >= 0, получено {height}")
     if height == 0:
         return {"value": root, "left": None, "right": None}
     return {
